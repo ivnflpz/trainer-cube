@@ -1,11 +1,14 @@
 import React from 'react';
 import Layout from './components/Layout';
+import {UserProvider} from './providers/UserProvider';
 
 const App = () => {
   return (
-    <div className="App">
-      <Layout />
-    </div>
+    <UserProvider>
+      <div className="App">
+        <Layout />
+      </div>
+    </UserProvider>
   );
 };
 
