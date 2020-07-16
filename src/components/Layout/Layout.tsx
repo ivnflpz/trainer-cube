@@ -7,6 +7,7 @@ import Timer from '../Timer';
 import Settings from '../Settings';
 import Trainer from '../Trainer';
 import Algorithms from '../Algorithms';
+import { Login } from '../LoginSignup';
 
 const Layout: React.FC = () => {
   const [sSidenavOpen, setSidenavOpen] = React.useState(false);
@@ -27,6 +28,9 @@ const Layout: React.FC = () => {
         </Route>
         <Route exact path="/settings">
           <Settings />
+        </Route>
+        <Route exact path="/login">
+          <Login />
         </Route>
         <Route exact path="/">
           <Home />
