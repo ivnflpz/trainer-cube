@@ -3,18 +3,18 @@ import Container from '@material-ui/core/Container';
 import { signInWithGoogle, auth } from '../../firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 14,
     '& .MuiTextField-root': {
-      margin: theme.spacing(0, 0, 1),
+      margin: theme.spacing(0, 0, 2),
     },
   },
   divider: {
@@ -39,7 +39,7 @@ const Login = () => {
     <Container maxWidth="sm" className={classes.root}>
       <Card>
         <CardContent>
-          <Typography variant="h6" component="h2" align="center" gutterBottom>
+          <Typography variant="h6" align="center" gutterBottom>
             Login to Trainer<sup>3</sup>
           </Typography>
           <Button variant="contained" color="primary" fullWidth onClick={signInWithGoogle}>Sign in with Google</Button>
@@ -49,6 +49,7 @@ const Login = () => {
           <TextField
             fullWidth
             id="email-input"
+            variant="outlined"
             label="Email"
             type="email"
             value={sEmail}
@@ -58,6 +59,7 @@ const Login = () => {
           <TextField
             fullWidth
             id="password-input"
+            variant="outlined"
             label="Password"
             type="password"
             autoComplete="current-password"
@@ -65,10 +67,14 @@ const Login = () => {
             error={sError}
             onChange={(evt) => setPassword(evt.target.value)}
           />
-        </CardContent>
-        <CardActions>
           <Button variant="outlined" color="primary" fullWidth onClick={onSignIn}>Sign in</Button>
-        </CardActions>
+
+          <Divider className={classes.divider} />
+
+          <Typography variant="subtitle2" align="center" gutterBottom>
+            New user? <Link to="/signup">Sign up</Link>
+          </Typography>
+        </CardContent>
       </Card>
     </Container>
   );

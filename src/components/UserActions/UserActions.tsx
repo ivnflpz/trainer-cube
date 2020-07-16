@@ -8,12 +8,17 @@ import Avatar from '@material-ui/core/Avatar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
   avatar: {
     width: 24,
     height: 24,
   },
+  link: {
+    color: 'white',
+    textDecoration: 'none',
+  }
 }));
 
 const UserActions: React.FC = () => {
@@ -70,7 +75,7 @@ const UserActions: React.FC = () => {
   if (user !== null && user !== undefined) {
     return renderUserActions();
   } else {
-    return <Button color="inherit" onClick={signInWithGoogle}>Login</Button>;
+    return <Link to="/login" className={classes.link}><Button color="inherit">Login</Button></Link>;
   }
 };
 
