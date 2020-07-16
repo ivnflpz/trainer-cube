@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import UserActions from '../UserActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+  },
+  avatar: {
+    width: 24,
+    height: 24,
   },
 }));
 
@@ -36,7 +40,7 @@ const AppBar: React.FC<IAppBarProps> = ({ onMenuToggle }) => {
           <Typography variant="h6" className={classes.title}>
             Trainer<sup>3</sup>
           </Typography>
-          <Button color="inherit">Login</Button>
+          <UserActions />
         </Toolbar>
       </MuiAppBar>
     </div>
