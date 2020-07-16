@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,11 +26,20 @@ const Login = () => {
   const [sEmail, setEmail] = React.useState('');
   const [sPassword, setPassword] = React.useState('');
   const [sError, setError] = React.useState(false);
+  const history = useHistory();
 
   const onSignIn = () => {
-    auth.signInWithEmailAndPassword(sEmail, sPassword).catch((error) => {
+    auth.signInWithEmailAndPassword(sEmail, sPassword).then(() => {
+      history.replace('/');
+    }).catch((error) => {
       setError(true);
       console.error(error);
+    });
+  };
+
+  const onSignInWithGoogle = () => {
+    signInWithGoogle().then(() => {
+      history.replace('/');
     });
   };
 
@@ -42,7 +51,7 @@ const Login = () => {
           <Typography variant="h6" align="center" gutterBottom>
             Login to Trainer<sup>3</sup>
           </Typography>
-          <Button variant="contained" color="primary" fullWidth onClick={signInWithGoogle}>Sign in with Google</Button>
+          <Button variant="contained" color="primary" fullWidth onClick={onSignInWithGoogle}>Sign in with Google</Button>
 
           <Divider className={classes.divider} />
 

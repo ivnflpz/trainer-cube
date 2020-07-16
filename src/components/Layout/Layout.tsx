@@ -1,16 +1,18 @@
 import React from 'react';
 import AppBar from '../AppBar';
 import SideNav from '../SideNav';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Home from '../Home';
 import Timer from '../Timer';
 import Settings from '../Settings';
 import Trainer from '../Trainer';
 import Algorithms from '../Algorithms';
-import { Login } from '../LoginSignup';
+import { Login, SignUp } from '../LoginSignup';
+import { useUserContext } from '../../providers/UserProvider';
 
 const Layout: React.FC = () => {
   const [sSidenavOpen, setSidenavOpen] = React.useState(false);
+  const { authenticated } = useUserContext();
 
   return (
     <BrowserRouter>
@@ -30,7 +32,10 @@ const Layout: React.FC = () => {
           <Settings />
         </Route>
         <Route exact path="/login">
-          <Login />
+          { authenticated ? <Redirect to="/" /> : <Login />}
+        </Route>
+        <Route exact path="/signup">
+          { authenticated ? <Redirect to="/" /> : <SignUp />}
         </Route>
         <Route exact path="/">
           <Home />

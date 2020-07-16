@@ -2,10 +2,11 @@ import React from 'react';
 import { auth, createUserProfileDoc } from '../firebase';
 
 interface IUserContext {
+    authenticated: boolean;
     user: any;
 }
 
-const UserContext = React.createContext<IUserContext>({ user: null });
+const UserContext = React.createContext<IUserContext>({ authenticated: false, user: null });
 
 const UserProvider: React.FC = ({children}) => {
   const [sUser, setUser] = React.useState<any>(null);
@@ -20,7 +21,7 @@ const UserProvider: React.FC = ({children}) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user: sUser}}>
+    <UserContext.Provider value={{ authenticated: sUser !== null && sUser !== undefined, user: sUser}}>
       {children}
     </UserContext.Provider>
   );
