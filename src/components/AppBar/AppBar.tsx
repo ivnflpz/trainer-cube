@@ -32,7 +32,7 @@ const AppBar: React.FC<IAppBarProps> = ({ onMenuToggle }) => {
 
   return (
     <div className={classes.root}>
-      <MuiAppBar position="static">
+      <MuiAppBar position="fixed">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={() => onMenuToggle(true)}>
             <MenuIcon />
