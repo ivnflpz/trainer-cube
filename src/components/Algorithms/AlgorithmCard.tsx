@@ -2,9 +2,16 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Icon from './Icon';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@material-ui/core/IconButton';
+import clsx from 'clsx';
+import { Collapse } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: 10,
+    padding: theme.spacing(1.25, 1.25, 0),
   },
   algSection: {
     display: 'flex',
@@ -37,13 +44,32 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
     fontSize: '5em'
-  }
+  },
+  favButton: {
+    padding: theme.spacing(1),
+  },
+  favIcon: {
+    color: 'red',
+  },
+  expand: {
+    padding: theme.spacing(1),
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
 }));
 
 interface IAlgorithmCardProps {
   algorithm: AlgorithmData;
 }
 const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
+  const [sFavorite, setFavorite] = React.useState(false);
+  const [sExpanded, setExpanded] = React.useState(false);
   const classes = useStyles();
 
   const renderAlgWithLabel = (label: string, alg: string) => {
@@ -65,9 +91,8 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
           <Typography variant="subtitle2" align="center">
             {algorithm.name}
           </Typography>
-
           <Typography variant="subtitle2" align="center">
-            {algorithm.type}
+            ({algorithm.type})
           </Typography>
         </div>
         
@@ -83,6 +108,26 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
           
         </div>
       </CardContent>
+      <CardActions disableSpacing>
+        <IconButton className={classes.favButton} aria-label="add to favorites" onClick={() => setFavorite(fav => !fav)}>
+          { sFavorite ? <FavoriteIcon className={classes.favIcon} /> : <FavoriteBorderIcon />}
+        </IconButton>
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: sExpanded,
+          })}
+          onClick={() => setExpanded(exp => !exp)}
+          aria-expanded={sExpanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+      </CardActions>
+      <Collapse in={sExpanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          Placeholder for all algorithms
+        </CardContent>
+      </Collapse>
     </Card>
   );
 };
