@@ -1,12 +1,12 @@
 import React from 'react';
 import Layout from './components/Layout';
 import {UserProvider} from './providers/UserProvider';
+import './App.css';
 
-const style = { background: '#ecf0f1' };
 const App = () => {
   return (
     <UserProvider>
-      <div className="App" style={style}>
+      <div className="App">
         <Layout />
       </div>
     </UserProvider>
