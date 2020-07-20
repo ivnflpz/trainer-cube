@@ -14,7 +14,8 @@ const ColorProvider: React.FC = ({children}) => {
     F: 'red',
     B: 'orange',
     R: 'green',
-    L: 'blue'});
+    L: 'blue',
+    N: 'gray' });
   return (
     <ColorContext.Provider value={{ colors: sColors }}>
       {children}
