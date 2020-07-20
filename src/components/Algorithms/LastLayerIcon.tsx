@@ -1,5 +1,6 @@
 import React from 'react';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import { useColorsContext } from '../../providers/ColorProvider';
 
 interface ITopLayerIcon {
     className?: string;
@@ -8,18 +9,10 @@ interface ITopLayerIcon {
     type: AlgType;
     arrows?: string;
 }
-const colors: any = {
-  R: 'red',
-  G: 'green',
-  B: 'blue',
-  Y: 'yellow',
-  W: 'white',
-  O: 'orange',
-  N: 'gray',
-};
 
 const LastLayerIcon: React.FC<ITopLayerIcon> = ({ arrows, edges, faces, type, ...other }) => {
-  const faceList = type === 'OLL' && faces !== null && faces !== undefined ? faces.split(' ') : Array.from('Y'.repeat(9));
+  const { colors } = useColorsContext();
+  const faceList = type === 'OLL' && faces !== null && faces !== undefined ? faces.split(' ') : Array.from('U'.repeat(9));
   const edgeList = edges.split(' ');
   const arrowList = arrows?.split(',') || [];
 
