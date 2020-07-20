@@ -35,12 +35,18 @@ const routes = [
     url: '/trainer',
     text: 'Trainer',
     icon: 'fitness',
+  }],
+  [{
+    url: '/algorithms/oll',
+    text: 'OLL',
+    icon: 'grid',
   },
   {
-    url: '/algorithms',
-    text: 'Algorithms',
+    url: '/algorithms/pll',
+    text: 'PLL',
     icon: 'grid',
-  }],
+  }
+  ],
   [{
     url: '/settings',
     text: 'Settings',
