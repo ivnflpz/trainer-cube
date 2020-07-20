@@ -4,10 +4,14 @@ type SideNavRoute = {
     icon: string;
 }
 
+type AlgType = 'OLL' | 'PLL';
+
 type AlgorithmData = {
     name: string;
     displayAlgorithm: string;
-    faces: string;
+    faces?: string;
     edges: string;
-    type: string;
+    group: string;
+    type: AlgType;
+    arrows?: string;
 };

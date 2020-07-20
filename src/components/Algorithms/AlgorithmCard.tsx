@@ -5,7 +5,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import Icon from './Icon';
+import Icon from './LastLayerIcon';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -92,14 +92,14 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
             {algorithm.name}
           </Typography>
           <Typography variant="subtitle2" align="center">
-            ({algorithm.type})
+            ({algorithm.group})
           </Typography>
         </div>
         
         <Divider className={classes.divider} />
 
         <div className={classes.info}>
-          <Icon className={classes.icon} faces={algorithm.faces} edges={algorithm.edges} />
+          <Icon className={classes.icon} faces={algorithm.faces} edges={algorithm.edges} type={algorithm.type} arrows={algorithm.arrows} />
 
           <div className={classes.algSection}>
             {renderAlgWithLabel('Solve:', algorithm.displayAlgorithm)}
@@ -132,4 +132,4 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
   );
 };
 
-export default AlgorithmCard;
+export default React.memo(AlgorithmCard);

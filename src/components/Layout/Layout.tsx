@@ -34,8 +34,11 @@ const Layout: React.FC = () => {
           <Route exact path="/trainer">
             <Trainer />
           </Route>
-          <Route exact path="/algorithms">
-            <Algorithms />
+          <Route exact path="/algorithms/oll">
+            <Algorithms type="OLL"/>
+          </Route>
+          <Route exact path="/algorithms/pll">
+            <Algorithms type="PLL"/>
           </Route>
           <Route exact path="/settings">
             <Settings />
