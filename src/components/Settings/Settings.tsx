@@ -22,6 +22,9 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
+  },
+  title: {
+    alignSelf: 'flex-start',
   }
 });
 
@@ -44,7 +47,7 @@ const Settings = () => {
   const renderCubeScheme = () => {
     return (
       <section className={classes.cubeContainer}>
-        <Typography variant="subtitle2" align="center">
+        <Typography className={classes.title} variant="subtitle2">
               Color scheme
         </Typography>
         <div>
@@ -67,7 +70,6 @@ const Settings = () => {
 
   return (
     <>
-      <h1>Settings</h1>
       <Card variant="outlined">
         <CardContent>
           {renderCubeScheme()}
@@ -79,7 +81,6 @@ const Settings = () => {
           {renderColorPicker('Left', 'L')}
         </CardContent>
       </Card>
-      
     </>
   );
 };
