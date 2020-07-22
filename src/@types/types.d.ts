@@ -8,10 +8,11 @@ type AlgType = 'OLL' | 'PLL';
 
 type AlgorithmData = {
     name: string;
-    displayAlgorithm: string;
+    primary: string;
     faces?: string;
     edges: string;
     group: string;
     type: AlgType;
     arrows?: string;
+    algorithms: Array<string>;
 };
