@@ -14,4 +14,5 @@ type AlgorithmData = {
     group: string;
     type: AlgType;
     arrows?: string;
+    algorithms: Array<string>;
 };
