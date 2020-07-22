@@ -12,6 +12,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
 import clsx from 'clsx';
 import { Collapse } from '@material-ui/core';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,8 +73,10 @@ interface IAlgorithmCardProps {
   algorithm: AlgorithmData;
 }
 const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
+  const { algorithms, displayAlgorithm, name, group, faces, edges, type, arrows } = algorithm;
   const [sFavorite, setFavorite] = React.useState(false);
   const [sExpanded, setExpanded] = React.useState(false);
+  const [sPrimary, setPrimary] = React.useState(displayAlgorithm);
   const classes = useStyles();
 
   const renderAlgWithLabel = (label: string, alg: string) => {
@@ -84,28 +91,50 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
       </>
     );
   };
+
+  const renderRadioGroup = () => {
+    return (
+      <FormControl component="fieldset">
+        <FormLabel><Typography variant="subtitle2">Primary</Typography></FormLabel>
+        <RadioGroup aria-label="primary algorithm" name="primaryAlgorithm" value={sPrimary} onChange={(e) => setPrimary(e.target.value)}>
+          { algorithms.map(renderRadio)}
+        </RadioGroup>
+      </FormControl>
+    );
+  };
+
+  const renderRadio = (alg: string) => {
+    return (
+      <FormControlLabel 
+        key={alg} 
+        value={alg} 
+        control={<Radio size="small" />} 
+        label={<Typography variant="caption">{alg}</Typography>} 
+      />
+    );
+  };
+
   return (
     <Card className={classes.root}>
       <CardContent className={classes.content}>
         <div className={classes.header}>
           <Typography variant="subtitle2" align="center">
-            {algorithm.name}
+            {name}
           </Typography>
           <Typography variant="subtitle2" align="center">
-            ({algorithm.group})
+            ({group})
           </Typography>
         </div>
         
         <Divider className={classes.divider} />
 
         <div className={classes.info}>
-          <Icon className={classes.icon} faces={algorithm.faces} edges={algorithm.edges} type={algorithm.type} arrows={algorithm.arrows} />
+          <Icon className={classes.icon} faces={faces} edges={edges} type={type} arrows={arrows} />
 
           <div className={classes.algSection}>
-            {renderAlgWithLabel('Solve:', algorithm.displayAlgorithm)}
-            {renderAlgWithLabel('Scramble:', algorithm.displayAlgorithm)}
+            {renderAlgWithLabel('Solve:', sPrimary)}
+            {renderAlgWithLabel('Scramble:', displayAlgorithm)}
           </div>
-          
         </div>
       </CardContent>
       <CardActions disableSpacing>
@@ -125,7 +154,7 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
       </CardActions>
       <Collapse in={sExpanded} timeout="auto" unmountOnExit>
         <CardContent>
-          Placeholder for all algorithms
+          {renderRadioGroup()}
         </CardContent>
       </Collapse>
     </Card>
