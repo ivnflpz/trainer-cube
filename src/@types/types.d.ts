@@ -8,7 +8,7 @@ type AlgType = 'OLL' | 'PLL';
 
 type AlgorithmData = {
     name: string;
-    displayAlgorithm: string;
+    primary: string;
     faces?: string;
     edges: string;
     group: string;

@@ -73,10 +73,10 @@ interface IAlgorithmCardProps {
   algorithm: AlgorithmData;
 }
 const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
-  const { algorithms, displayAlgorithm, name, group, faces, edges, type, arrows } = algorithm;
+  const { algorithms, primary, name, group, faces, edges, type, arrows } = algorithm;
   const [sFavorite, setFavorite] = React.useState(false);
   const [sExpanded, setExpanded] = React.useState(false);
-  const [sPrimary, setPrimary] = React.useState(displayAlgorithm);
+  const [sPrimary, setPrimary] = React.useState(primary);
   const classes = useStyles();
 
   const renderAlgWithLabel = (label: string, alg: string) => {
@@ -133,7 +133,7 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
 
           <div className={classes.algSection}>
             {renderAlgWithLabel('Solve:', sPrimary)}
-            {renderAlgWithLabel('Scramble:', displayAlgorithm)}
+            {renderAlgWithLabel('Scramble:', primary)}
           </div>
         </div>
       </CardContent>
