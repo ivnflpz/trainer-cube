@@ -34,6 +34,7 @@ const AlgorithmProvider: React.FC = ({children}) => {
       }
       return;
     }
+    
     const unsubscribeAlgorithms = firestore.collection('algorithms').where('uid', '==', user.uid).onSnapshot(snapshot => {
       const algorithms: any = snapshot.docs.map(doc => { return { id: doc.id, ...doc.data() }; });
       readAlgorithms(algorithms);
@@ -50,6 +51,7 @@ const AlgorithmProvider: React.FC = ({children}) => {
     if (map[name]) {
       newAlgorithm.id = map[name].id;
     }
+
     if (user) {
       newAlgorithm.uid = user.uid;
       firebaseClient.upsertAlgorithm(newAlgorithm);

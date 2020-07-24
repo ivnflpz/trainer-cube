@@ -80,21 +80,19 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
   const [sExpanded, setExpanded] = React.useState(false);
   const [sPrimary, setPrimary] = React.useState(primary);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (type === 'OLL') {
-      if (ollAlgorithms[name]) {
-        setPrimary(ollAlgorithms[name].primary);
-      }
+    if (type === 'OLL' && ollAlgorithms[name]) {
+      setPrimary(ollAlgorithms[name].primary);
     }
   }, [name, type, ollAlgorithms[name]]);
 
   React.useEffect(() => {
-    if (type === 'PLL') { 
-      if (pllAlgorithms[name]) {
-        setPrimary(pllAlgorithms[name].primary);
-      }
+    if (type === 'PLL' && pllAlgorithms[name]) { 
+      setPrimary(pllAlgorithms[name].primary);
     }
   }, [name, type, pllAlgorithms[name]]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const classes = useStyles();
 
