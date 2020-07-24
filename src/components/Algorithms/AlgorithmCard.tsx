@@ -17,6 +17,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import { useAlgorithmContext } from '../../providers/AlgorithmProvider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,10 +75,31 @@ interface IAlgorithmCardProps {
 }
 const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
   const { algorithms, primary, name, group, faces, edges, type, arrows } = algorithm;
+  const { ollAlgorithms, pllAlgorithms, upsert } = useAlgorithmContext();
   const [sFavorite, setFavorite] = React.useState(false);
   const [sExpanded, setExpanded] = React.useState(false);
   const [sPrimary, setPrimary] = React.useState(primary);
+
+  /* eslint-disable react-hooks/exhaustive-deps */
+  React.useEffect(() => {
+    if (type === 'OLL' && ollAlgorithms[name]) {
+      setPrimary(ollAlgorithms[name].primary);
+    }
+  }, [name, type, ollAlgorithms[name]]);
+
+  React.useEffect(() => {
+    if (type === 'PLL' && pllAlgorithms[name]) { 
+      setPrimary(pllAlgorithms[name].primary);
+    }
+  }, [name, type, pllAlgorithms[name]]);
+  /* eslint-enable react-hooks/exhaustive-deps */
+
   const classes = useStyles();
+
+  const onPrimaryChange = (primarySelection: string) => {
+    upsert(name, primarySelection, type);
+    setPrimary(primarySelection);
+  };
 
   const renderAlgWithLabel = (label: string, alg: string) => {
     return (
@@ -96,8 +118,8 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
     return (
       <FormControl component="fieldset">
         <FormLabel><Typography variant="subtitle2">Primary</Typography></FormLabel>
-        <RadioGroup aria-label="primary algorithm" name="primaryAlgorithm" value={sPrimary} onChange={(e) => setPrimary(e.target.value)}>
-          { algorithms.map(renderRadio)}
+        <RadioGroup aria-label="primary algorithm" name="primaryAlgorithm" value={sPrimary} onChange={(e) => onPrimaryChange(e.target.value)}>
+          { algorithms.map(renderRadio) }
         </RadioGroup>
       </FormControl>
     );

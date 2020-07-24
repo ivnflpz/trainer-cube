@@ -16,3 +16,13 @@ type AlgorithmData = {
     arrows?: string;
     algorithms: Array<string>;
 };
+
+type UserAlgorithm = {
+    id?: string;
+    uid?: string;
+    type: AlgType;
+    name: string;
+    primary: string;
+}
+
+type UserAlgorithmMap = {[key: string]: userAlgorithm};
