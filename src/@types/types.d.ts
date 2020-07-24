@@ -23,6 +23,7 @@ type UserAlgorithm = {
     type: AlgType;
     name: string;
     primary: string;
+    favorite: boolean;
 }
 
 type UserAlgorithmMap = {[key: string]: userAlgorithm};

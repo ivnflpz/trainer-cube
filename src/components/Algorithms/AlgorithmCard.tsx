@@ -84,12 +84,14 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
   React.useEffect(() => {
     if (type === 'OLL' && ollAlgorithms[name]) {
       setPrimary(ollAlgorithms[name].primary);
+      setFavorite(ollAlgorithms[name].favorite);
     }
   }, [name, type, ollAlgorithms[name]]);
 
   React.useEffect(() => {
     if (type === 'PLL' && pllAlgorithms[name]) { 
       setPrimary(pllAlgorithms[name].primary);
+      setFavorite(pllAlgorithms[name].favorite);
     }
   }, [name, type, pllAlgorithms[name]]);
   /* eslint-enable react-hooks/exhaustive-deps */
@@ -97,8 +99,13 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
   const classes = useStyles();
 
   const onPrimaryChange = (primarySelection: string) => {
-    upsert(name, primarySelection, type);
+    upsert(name, primarySelection, type, sFavorite);
     setPrimary(primarySelection);
+  };
+
+  const onFavoriteToggle = () => {
+    upsert(name, sPrimary, type, !sFavorite);
+    setFavorite(fav => !fav);
   };
 
   const renderAlgWithLabel = (label: string, alg: string) => {
@@ -160,7 +167,7 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
         </div>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton className={classes.favButton} aria-label="add to favorites" onClick={() => setFavorite(fav => !fav)}>
+        <IconButton className={classes.favButton} aria-label="add to favorites" onClick={onFavoriteToggle}>
           { sFavorite ? <FavoriteIcon className={classes.favIcon} /> : <FavoriteBorderIcon />}
         </IconButton>
         <IconButton
