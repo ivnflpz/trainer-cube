@@ -99,7 +99,7 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
   const classes = useStyles();
 
   const onPrimaryChange = (primarySelection: string) => {
-    upsert({ name, primary: primarySelection, type });
+    upsert(name, primarySelection, type);
     setPrimary(primarySelection);
   };
 
