@@ -1,29 +1,42 @@
 import React from 'react';
 import { firestore } from '../firebase';
 import { useUserContext } from './UserProvider';
-import FirebaseClient from '../repositories/FirebaseClient';
+import { upsertAlgorithm } from '../repositories/FirebaseClient';
 
 interface IAlgorithmContext {
   ollAlgorithms: UserAlgorithmMap;
   pllAlgorithms: UserAlgorithmMap;
-  upsert: (name: string, primary: string, type: AlgType, favorite: boolean) => void;
+  upsert: (
+    name: string,
+    primary: string,
+    type: AlgType,
+    favorite: boolean
+  ) => void;
 }
 
-const AlgorithmContext = React.createContext<IAlgorithmContext>({ 
+const AlgorithmContext = React.createContext<IAlgorithmContext>({
   ollAlgorithms: {},
   pllAlgorithms: {},
-  upsert: () => null });
+  upsert: () => null,
+});
 
-const firebaseClient = new FirebaseClient();
 const USER_ALGORITHMS_KEY = 'userAlgorithms';
-const AlgorithmProvider: React.FC = ({children}) => {
+const AlgorithmProvider: React.FC = ({ children }) => {
   const [sOllMap, setOllMap] = React.useState({} as UserAlgorithmMap);
   const [sPllMap, setPllMap] = React.useState({} as UserAlgorithmMap);
   const { user } = useUserContext();
 
   const readAlgorithms = (algorithms: Array<UserAlgorithm>) => {
-    setOllMap(algorithms.filter((a: any) => a.type === 'OLL').reduce((p: any, c: any) => { return {...p, [c.name]: c}; }, {}));
-    setPllMap(algorithms.filter((a: any) => a.type === 'PLL').reduce((p: any, c: any) => { return {...p, [c.name]: c}; }, {}));
+    setOllMap(
+      algorithms
+        .filter((a: any) => a.type === 'OLL')
+        .reduce((p: any, c: any) => ({ ...p, [c.name]: c }), {})
+    );
+    setPllMap(
+      algorithms
+        .filter((a: any) => a.type === 'PLL')
+        .reduce((p: any, c: any) => ({ ...p, [c.name]: c }), {})
+    );
   };
 
   React.useEffect(() => {
@@ -32,21 +45,35 @@ const AlgorithmProvider: React.FC = ({children}) => {
       if (algorithmsLS) {
         readAlgorithms(JSON.parse(algorithmsLS));
       }
-      return;
+      return () => null;
     }
 
-    const unsubscribeAlgorithms = firestore.collection('algorithms').where('uid', '==', user.uid).onSnapshot(snapshot => {
-      const algorithms: any = snapshot.docs.map(doc => { return { id: doc.id, ...doc.data() }; });
-      readAlgorithms(algorithms);
-    });
+    const unsubscribeAlgorithms = firestore
+      .collection('algorithms')
+      .where('uid', '==', user.uid)
+      .onSnapshot((snapshot) => {
+        const algorithms: any = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        readAlgorithms(algorithms);
+      });
 
     return () => unsubscribeAlgorithms();
   }, [user]);
 
-  const upsert = (name: string, primary: string, type: AlgType, favorite: boolean) => {
+  const upsert = (
+    name: string,
+    primary: string,
+    type: AlgType,
+    favorite: boolean
+  ) => {
     const map = type === 'OLL' ? sOllMap : sPllMap;
     const newAlgorithm: UserAlgorithm = {
-      name, primary, type, favorite
+      name,
+      primary,
+      type,
+      favorite,
     };
     if (map[name]) {
       newAlgorithm.id = map[name].id;
@@ -54,7 +81,7 @@ const AlgorithmProvider: React.FC = ({children}) => {
 
     if (user) {
       newAlgorithm.uid = user.uid;
-      firebaseClient.upsertAlgorithm(newAlgorithm);
+      upsertAlgorithm(newAlgorithm);
     } else {
       const newMap = { ...map, [name]: newAlgorithm };
       let userAlgorithms = null;
@@ -70,7 +97,9 @@ const AlgorithmProvider: React.FC = ({children}) => {
   };
 
   return (
-    <AlgorithmContext.Provider value={{ upsert, ollAlgorithms: sOllMap, pllAlgorithms: sPllMap }}>
+    <AlgorithmContext.Provider
+      value={{ upsert, ollAlgorithms: sOllMap, pllAlgorithms: sPllMap }}
+    >
       {children}
     </AlgorithmContext.Provider>
   );

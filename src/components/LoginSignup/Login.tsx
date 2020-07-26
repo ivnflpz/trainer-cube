@@ -1,6 +1,5 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import { signInWithGoogle, auth } from '../../firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import { Link, useHistory } from 'react-router-dom';
+import { signInWithGoogle, auth } from '../../firebase';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,12 +29,16 @@ const Login = () => {
   const history = useHistory();
 
   const onSignIn = () => {
-    auth.signInWithEmailAndPassword(sEmail, sPassword).then(() => {
-      history.replace('/');
-    }).catch((error) => {
-      setError(true);
-      console.error(error);
-    });
+    auth
+      .signInWithEmailAndPassword(sEmail, sPassword)
+      .then(() => {
+        history.replace('/');
+      })
+      .catch((error) => {
+        setError(true);
+        /* eslint-disable-next-line no-console */
+        console.error(error);
+      });
   };
 
   const onSignInWithGoogle = () => {
@@ -51,7 +55,14 @@ const Login = () => {
           <Typography variant="h6" align="center" gutterBottom>
             Login to Trainer<sup>3</sup>
           </Typography>
-          <Button variant="contained" color="primary" fullWidth onClick={onSignInWithGoogle}>Sign in with Google</Button>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={onSignInWithGoogle}
+          >
+            Sign in with Google
+          </Button>
 
           <Divider className={classes.divider} />
 
@@ -76,7 +87,14 @@ const Login = () => {
             error={sError}
             onChange={(evt) => setPassword(evt.target.value)}
           />
-          <Button variant="outlined" color="primary" fullWidth onClick={onSignIn}>Sign in</Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            fullWidth
+            onClick={onSignIn}
+          >
+            Sign in
+          </Button>
 
           <Divider className={classes.divider} />
 

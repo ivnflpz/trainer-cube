@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface IAppBarProps {
-    onMenuToggle: (open: boolean) => void;
+  onMenuToggle: (open: boolean) => void;
 }
 
 const AppBar: React.FC<IAppBarProps> = ({ onMenuToggle }) => {
@@ -34,7 +34,13 @@ const AppBar: React.FC<IAppBarProps> = ({ onMenuToggle }) => {
     <div className={classes.root}>
       <MuiAppBar position="fixed">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={() => onMenuToggle(true)}>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+            onClick={() => onMenuToggle(true)}
+          >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>

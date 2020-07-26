@@ -5,7 +5,6 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import Icon from './LastLayerIcon';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -17,8 +16,9 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import { useAlgorithmContext } from '../../providers/AlgorithmProvider';
 import { debounce } from 'lodash';
+import { useAlgorithmContext } from '../../providers/AlgorithmProvider';
+import Icon from './LastLayerIcon';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     marginRight: theme.spacing(2),
-    fontSize: '5em'
+    fontSize: '5em',
   },
   favButton: {
     padding: theme.spacing(1),
@@ -75,13 +75,22 @@ interface IAlgorithmCardProps {
   algorithm: AlgorithmData;
 }
 const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
-  const { algorithms, primary, name, group, faces, edges, type, arrows } = algorithm;
+  const {
+    algorithms,
+    primary,
+    name,
+    group,
+    faces,
+    edges,
+    type,
+    arrows,
+  } = algorithm;
   const { ollAlgorithms, pllAlgorithms, upsert } = useAlgorithmContext();
   const [sFavorite, setFavorite] = React.useState(false);
   const [sExpanded, setExpanded] = React.useState(false);
   const [sPrimary, setPrimary] = React.useState(primary);
 
-  const debouncedUpsert = React.useRef(debounce(upsert, 1000, { }));
+  const debouncedUpsert = React.useRef(debounce(upsert, 1000, {}));
 
   React.useEffect(() => {
     // need to update pointer to new function with updated state
@@ -97,7 +106,7 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
   }, [name, type, ollAlgorithms[name]]);
 
   React.useEffect(() => {
-    if (type === 'PLL' && pllAlgorithms[name]) { 
+    if (type === 'PLL' && pllAlgorithms[name]) {
       setPrimary(pllAlgorithms[name].primary);
       setFavorite(pllAlgorithms[name].favorite);
     }
@@ -113,43 +122,44 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
 
   const onFavoriteToggle = () => {
     debouncedUpsert.current(name, sPrimary, type, !sFavorite);
-    setFavorite(fav => !fav);
+    setFavorite((fav) => !fav);
   };
 
-  const renderAlgWithLabel = (label: string, alg: string) => {
-    return (
-      <>
-        <Typography variant="subtitle2" align="left">
-          {label}
-        </Typography>
-        <Typography variant="caption" align="left" gutterBottom>
-          {alg}
-        </Typography>
-      </>
-    );
-  };
+  const renderAlgWithLabel = (label: string, alg: string) => (
+    <>
+      <Typography variant="subtitle2" align="left">
+        {label}
+      </Typography>
+      <Typography variant="caption" align="left" gutterBottom>
+        {alg}
+      </Typography>
+    </>
+  );
 
-  const renderRadioGroup = () => {
-    return (
-      <FormControl component="fieldset">
-        <FormLabel><Typography variant="subtitle2">Primary</Typography></FormLabel>
-        <RadioGroup aria-label="primary algorithm" name="primaryAlgorithm" value={sPrimary} onChange={(e) => onPrimaryChange(e.target.value)}>
-          { algorithms.map(renderRadio) }
-        </RadioGroup>
-      </FormControl>
-    );
-  };
+  const renderRadio = (alg: string) => (
+    <FormControlLabel
+      key={alg}
+      value={alg}
+      control={<Radio size="small" />}
+      label={<Typography variant="caption">{alg}</Typography>}
+    />
+  );
 
-  const renderRadio = (alg: string) => {
-    return (
-      <FormControlLabel 
-        key={alg} 
-        value={alg} 
-        control={<Radio size="small" />} 
-        label={<Typography variant="caption">{alg}</Typography>} 
-      />
-    );
-  };
+  const renderRadioGroup = () => (
+    <FormControl component="fieldset">
+      <FormLabel>
+        <Typography variant="subtitle2">Primary</Typography>
+      </FormLabel>
+      <RadioGroup
+        aria-label="primary algorithm"
+        name="primaryAlgorithm"
+        value={sPrimary}
+        onChange={(e) => onPrimaryChange(e.target.value)}
+      >
+        {algorithms.map(renderRadio)}
+      </RadioGroup>
+    </FormControl>
+  );
 
   return (
     <Card className={classes.root}>
@@ -162,11 +172,17 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
             ({group})
           </Typography>
         </div>
-        
+
         <Divider className={classes.divider} />
 
         <div className={classes.info}>
-          <Icon className={classes.icon} faces={faces} edges={edges} type={type} arrows={arrows} />
+          <Icon
+            className={classes.icon}
+            faces={faces}
+            edges={edges}
+            type={type}
+            arrows={arrows}
+          />
 
           <div className={classes.algSection}>
             {renderAlgWithLabel('Solve:', sPrimary)}
@@ -175,14 +191,22 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
         </div>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton className={classes.favButton} aria-label="add to favorites" onClick={onFavoriteToggle}>
-          { sFavorite ? <FavoriteIcon className={classes.favIcon} /> : <FavoriteBorderIcon />}
+        <IconButton
+          className={classes.favButton}
+          aria-label="add to favorites"
+          onClick={onFavoriteToggle}
+        >
+          {sFavorite ? (
+            <FavoriteIcon className={classes.favIcon} />
+          ) : (
+            <FavoriteBorderIcon />
+          )}
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: sExpanded,
           })}
-          onClick={() => setExpanded(exp => !exp)}
+          onClick={() => setExpanded((exp) => !exp)}
           aria-expanded={sExpanded}
           aria-label="show more"
         >
@@ -190,9 +214,7 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
         </IconButton>
       </CardActions>
       <Collapse in={sExpanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          {renderRadioGroup()}
-        </CardContent>
+        <CardContent>{renderRadioGroup()}</CardContent>
       </Collapse>
     </Card>
   );

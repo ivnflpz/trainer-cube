@@ -12,7 +12,9 @@ const Algorithms: React.FC<IAlgorithmsProps> = ({ type }) => {
   return (
     <>
       <div>
-        {list.map(alg => <AlgorithmCard key={alg.name} algorithm={alg} />)}
+        {list.map((alg) => (
+          <AlgorithmCard key={alg.name} algorithm={alg} />
+        ))}
       </div>
     </>
   );
