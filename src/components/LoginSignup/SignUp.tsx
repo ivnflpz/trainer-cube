@@ -1,6 +1,5 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import { auth } from '../../firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { useHistory } from 'react-router-dom';
+import { auth } from '../../firebase';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,31 +25,44 @@ const SignUp = () => {
   const [sEmail, setEmail] = React.useState('');
   const [sPassword, setPassword] = React.useState('');
   const [sConfirmPassword, setConfirmPassword] = React.useState('');
-  const [sErrors, setErrors] = React.useState({ email: false, password: false, confirmPassword: false });
+  const [sErrors, setErrors] = React.useState({
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
   const history = useHistory();
 
   const onEmailChange = (email: string) => {
     setEmail(email);
-    setErrors(errors => { return { ...errors, email: !email.includes('@')};});
+    setErrors((errors) => ({ ...errors, email: !email.includes('@') }));
   };
 
   const onPasswordChange = (password: string) => {
     setPassword(password);
-    setErrors(errors => { return { ...errors, password: password.length < 8, confirmPassword: password !== sConfirmPassword};});
+    setErrors((errors) => ({
+      ...errors,
+      password: password.length < 8,
+      confirmPassword: password !== sConfirmPassword,
+    }));
   };
 
   const onConfirmPasswordChange = (confirmPassword: string) => {
     setConfirmPassword(confirmPassword);
-    setErrors(errors => { return { ...errors, confirmPassword: sPassword !== confirmPassword };});
+    setErrors((errors) => ({
+      ...errors,
+      confirmPassword: sPassword !== confirmPassword,
+    }));
   };
 
   const onSignUp = () => {
-    auth.createUserWithEmailAndPassword(sEmail, sPassword)
+    auth
+      .createUserWithEmailAndPassword(sEmail, sPassword)
       .then(() => {
         history.replace('/');
       })
       .catch((error) => {
-        setErrors(errors => { return { ...errors, email: true };});
+        setErrors((errors) => ({ ...errors, email: true }));
+        /* eslint-disable-next-line no-console */
         console.error(error);
       });
   };
@@ -82,7 +95,9 @@ const SignUp = () => {
             type="password"
             autoComplete="new-password"
             error={sErrors.password}
-            helperText={sErrors.password ? 'Password must be at least 8 characters' : null}
+            helperText={
+              sErrors.password ? 'Password must be at least 8 characters' : null
+            }
             value={sPassword}
             onChange={(evt) => onPasswordChange(evt.target.value)}
           />
@@ -98,7 +113,14 @@ const SignUp = () => {
             helperText={sErrors.confirmPassword ? 'Passwords must match' : null}
             onChange={(evt) => onConfirmPasswordChange(evt.target.value)}
           />
-          <Button variant="outlined" color="primary" fullWidth onClick={onSignUp}>Sign up</Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            fullWidth
+            onClick={onSignUp}
+          >
+            Sign up
+          </Button>
         </CardContent>
       </Card>
     </Container>

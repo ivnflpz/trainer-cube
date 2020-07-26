@@ -12,46 +12,53 @@ const useStyles = makeStyles({
   link: {
     color: 'rgba(0, 0, 0, 0.87)',
     textDecoration: 'none',
-  }
+  },
 });
 
 interface ISidenavProps {
-    open: boolean;
-    onOpenToggle: (open: boolean) => void;
+  open: boolean;
+  onOpenToggle: (open: boolean) => void;
 }
 
 const routes = [
-  [{
-    url: '/',
-    text: 'Home',
-    icon: 'home',
-  }],
-  [{
-    url: '/timer',
-    text: 'Timer',
-    icon: 'timer',
-  },
-  {
-    url: '/trainer',
-    text: 'Trainer',
-    icon: 'fitness',
-  }],
-  [{
-    url: '/algorithms/oll',
-    text: 'OLL',
-    icon: 'grid',
-  },
-  {
-    url: '/algorithms/pll',
-    text: 'PLL',
-    icon: 'grid',
-  }
+  [
+    {
+      url: '/',
+      text: 'Home',
+      icon: 'home',
+    },
   ],
-  [{
-    url: '/settings',
-    text: 'Settings',
-    icon: 'settings',
-  }]
+  [
+    {
+      url: '/timer',
+      text: 'Timer',
+      icon: 'timer',
+    },
+    {
+      url: '/trainer',
+      text: 'Trainer',
+      icon: 'fitness',
+    },
+  ],
+  [
+    {
+      url: '/algorithms/oll',
+      text: 'OLL',
+      icon: 'grid',
+    },
+    {
+      url: '/algorithms/pll',
+      text: 'PLL',
+      icon: 'grid',
+    },
+  ],
+  [
+    {
+      url: '/settings',
+      text: 'Settings',
+      icon: 'settings',
+    },
+  ],
 ];
 
 const SideNav: React.FC<ISidenavProps> = ({ open, onOpenToggle }) => {
@@ -64,22 +71,28 @@ const SideNav: React.FC<ISidenavProps> = ({ open, onOpenToggle }) => {
       onClick={() => onOpenToggle(false)}
       onKeyDown={() => onOpenToggle(false)}
     >
-      {routes.map((section, index) => {
-        return (
-          <React.Fragment key={`section-${index}`}>
-            <List>
-              {section.map(route => <SideNavLink key={route.text} url={route.url} text={route.text} icon={route.icon}/>)}
-            </List>
-            {index !== routes.length - 1 && <Divider />}
-          </React.Fragment>
-        ); 
-      })}
+      {routes.map((section, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <React.Fragment key={`section-${index}`}>
+          <List>
+            {section.map((route) => (
+              <SideNavLink
+                key={route.text}
+                url={route.url}
+                text={route.text}
+                icon={route.icon}
+              />
+            ))}
+          </List>
+          {index !== routes.length - 1 && <Divider />}
+        </React.Fragment>
+      ))}
     </div>
   );
 
   return (
     <div>
-      <React.Fragment>
+      <>
         <SwipeableDrawer
           anchor="left"
           open={open}
@@ -88,7 +101,7 @@ const SideNav: React.FC<ISidenavProps> = ({ open, onOpenToggle }) => {
         >
           {list()}
         </SwipeableDrawer>
-      </React.Fragment>
+      </>
     </div>
   );
 };

@@ -2,17 +2,20 @@ import React from 'react';
 import { auth, createUserProfileDoc } from '../firebase';
 
 interface IUserContext {
-    authenticated: boolean;
-    user: any;
+  authenticated: boolean;
+  user: any;
 }
 
-const UserContext = React.createContext<IUserContext>({ authenticated: false, user: null });
+const UserContext = React.createContext<IUserContext>({
+  authenticated: false,
+  user: null,
+});
 
-const UserProvider: React.FC = ({children}) => {
+const UserProvider: React.FC = ({ children }) => {
   const [sUser, setUser] = React.useState<any>(null);
 
   React.useEffect(() => {
-    const unsubscribeAuth = auth.onAuthStateChanged(async userAuth => {
+    const unsubscribeAuth = auth.onAuthStateChanged(async (userAuth) => {
       const user = await createUserProfileDoc(userAuth);
       setUser(user);
     });
@@ -21,7 +24,12 @@ const UserProvider: React.FC = ({children}) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ authenticated: sUser !== null && sUser !== undefined, user: sUser}}>
+    <UserContext.Provider
+      value={{
+        authenticated: sUser !== null && sUser !== undefined,
+        user: sUser,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -12,28 +12,30 @@ interface IAlertDialogProps {
   onAccept: () => void;
   title: string;
 }
-const AlertDialog: React.FC<IAlertDialogProps> = ({ children, open, onAccept, onClose, title }) => {
-  return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
-      <DialogContent>
-        {children}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} color="primary">
-            Disagree
-        </Button>
-        <Button onClick={onAccept} color="primary" autoFocus>
-            Agree
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
+const AlertDialog: React.FC<IAlertDialogProps> = ({
+  children,
+  open,
+  onAccept,
+  onClose,
+  title,
+}) => (
+  <Dialog
+    open={open}
+    onClose={onClose}
+    aria-labelledby="alert-dialog-title"
+    aria-describedby="alert-dialog-description"
+  >
+    <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+    <DialogContent>{children}</DialogContent>
+    <DialogActions>
+      <Button onClick={onClose} color="primary">
+        Disagree
+      </Button>
+      <Button onClick={onAccept} color="primary" autoFocus>
+        Agree
+      </Button>
+    </DialogActions>
+  </Dialog>
+);
 
 export default AlertDialog;

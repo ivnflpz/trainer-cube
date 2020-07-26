@@ -15,9 +15,9 @@ const firebaseConfig = {
   storageBucket: 'trainer-cube.appspot.com',
   messagingSenderId: '725167384251',
   appId: '1:725167384251:web:b37acdd7b979e1a2676b9e',
-  measurementId: 'G-D8V4779EQK'
+  measurementId: 'G-D8V4779EQK',
 };
-  // Initialize Firebase
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 // firebase.analytics();
 
@@ -27,8 +27,23 @@ export const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => auth.signInWithRedirect(provider);
 export const signOut = () => auth.signOut();
 
-export const createUserProfileDoc = async(user: any, additionalData?: any) => {
-  if (!user) return;
+export const getUserDoc = async (uid: string): Promise<any> => {
+  if (!uid) return null;
+  try {
+    const doc = await firestore.collection('users').doc(uid).get();
+    return { uid, ...doc.data() };
+  } catch (error) {
+    /* eslint-disable-next-line no-console */
+    console.error('Error fetching data', error.message);
+    return null;
+  }
+};
+
+export const createUserProfileDoc = async (
+  user: any,
+  additionalData?: any
+): Promise<any> => {
+  if (!user) return null;
   const userRef = firestore.doc(`/users/${user.uid}`);
   const snapshot = await userRef.get();
   if (!snapshot.exists) {
@@ -36,23 +51,18 @@ export const createUserProfileDoc = async(user: any, additionalData?: any) => {
     const createdAt = new Date();
     try {
       await userRef.set({
-        displayName, email, photoURL, createdAt, ...additionalData
+        displayName,
+        email,
+        photoURL,
+        createdAt,
+        ...additionalData,
       });
-    } catch(error) {
+    } catch (error) {
+      /* eslint-disable-next-line no-console */
       console.error('Error creating user', error.message);
     }
   }
   return getUserDoc(user.uid);
-};
-
-export const getUserDoc = async (uid: string) => {
-  if(!uid) return null;
-  try {
-    const doc = await firestore.collection('users').doc(uid).get();
-    return { uid, ...doc.data() };
-  } catch (error) {
-    console.error('Error fetching data', error.message);
-  }
 };
 
 export default firebase;

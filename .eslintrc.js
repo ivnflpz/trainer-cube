@@ -4,6 +4,10 @@ module.exports = {
         'es2020': true
     },
     'extends': [
+        'airbnb-typescript',
+        'prettier/react',
+        'plugin:prettier/recommended',
+        'plugin:import/typescript',
         'eslint:recommended',
         'plugin:react/recommended',
         'plugin:@typescript-eslint/recommended'
@@ -14,7 +18,8 @@ module.exports = {
             'jsx': true
         },
         'ecmaVersion': 11,
-        'sourceType': 'module'
+        'sourceType': 'module',
+        'project': './tsconfig.json'
     },
     'plugins': [
         'react',

@@ -14,15 +14,15 @@ const useStyles = makeStyles({
   link: {
     color: 'rgba(0, 0, 0, 0.87)',
     textDecoration: 'none',
-  }
+  },
 });
 
-const iconMap: {[key: string]: any } = {
+const iconMap: { [key: string]: any } = {
   home: HomeIcon,
   timer: TimerIcon,
   fitness: FitnessCenterIcon,
   grid: GridOnIcon,
-  settings: SettingsIcon
+  settings: SettingsIcon,
 };
 
 interface ISideNavLink {
@@ -31,13 +31,15 @@ interface ISideNavLink {
   icon: string;
 }
 
-const SideNavLink: React.FC<ISideNavLink> = ({ url, text, icon}) => {
+const SideNavLink: React.FC<ISideNavLink> = ({ url, text, icon }) => {
   const classes = useStyles();
   const Icon = iconMap[icon];
   return (
     <Link className={classes.link} to={url}>
       <ListItem button>
-        <ListItemIcon><Icon /></ListItemIcon>
+        <ListItemIcon>
+          <Icon />
+        </ListItemIcon>
         <ListItemText primary={text} />
       </ListItem>
     </Link>
