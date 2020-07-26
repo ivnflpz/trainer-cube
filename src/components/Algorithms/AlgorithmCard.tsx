@@ -18,6 +18,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import { useAlgorithmContext } from '../../providers/AlgorithmProvider';
+import { debounce } from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,16 +81,25 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
   const [sExpanded, setExpanded] = React.useState(false);
   const [sPrimary, setPrimary] = React.useState(primary);
 
+  const debouncedUpsert = React.useRef(debounce(upsert, 1000, { }));
+
+  React.useEffect(() => {
+    // need to update pointer to new function with updated state
+    debouncedUpsert.current = debounce(upsert, 1000);
+  }, [upsert, pllAlgorithms, ollAlgorithms]);
+
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (type === 'OLL' && ollAlgorithms[name]) {
       setPrimary(ollAlgorithms[name].primary);
+      setFavorite(ollAlgorithms[name].favorite);
     }
   }, [name, type, ollAlgorithms[name]]);
 
   React.useEffect(() => {
     if (type === 'PLL' && pllAlgorithms[name]) { 
       setPrimary(pllAlgorithms[name].primary);
+      setFavorite(pllAlgorithms[name].favorite);
     }
   }, [name, type, pllAlgorithms[name]]);
   /* eslint-enable react-hooks/exhaustive-deps */
@@ -97,8 +107,13 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
   const classes = useStyles();
 
   const onPrimaryChange = (primarySelection: string) => {
-    upsert(name, primarySelection, type);
+    debouncedUpsert.current(name, primarySelection, type, sFavorite);
     setPrimary(primarySelection);
+  };
+
+  const onFavoriteToggle = () => {
+    debouncedUpsert.current(name, sPrimary, type, !sFavorite);
+    setFavorite(fav => !fav);
   };
 
   const renderAlgWithLabel = (label: string, alg: string) => {
@@ -160,7 +175,7 @@ const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
         </div>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton className={classes.favButton} aria-label="add to favorites" onClick={() => setFavorite(fav => !fav)}>
+        <IconButton className={classes.favButton} aria-label="add to favorites" onClick={onFavoriteToggle}>
           { sFavorite ? <FavoriteIcon className={classes.favIcon} /> : <FavoriteBorderIcon />}
         </IconButton>
         <IconButton

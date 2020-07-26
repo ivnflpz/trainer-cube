@@ -6,7 +6,7 @@ import FirebaseClient from '../repositories/FirebaseClient';
 interface IAlgorithmContext {
   ollAlgorithms: UserAlgorithmMap;
   pllAlgorithms: UserAlgorithmMap;
-  upsert: (name: string, primary: string, type: AlgType) => void;
+  upsert: (name: string, primary: string, type: AlgType, favorite: boolean) => void;
 }
 
 const AlgorithmContext = React.createContext<IAlgorithmContext>({ 
@@ -34,7 +34,7 @@ const AlgorithmProvider: React.FC = ({children}) => {
       }
       return;
     }
-    
+
     const unsubscribeAlgorithms = firestore.collection('algorithms').where('uid', '==', user.uid).onSnapshot(snapshot => {
       const algorithms: any = snapshot.docs.map(doc => { return { id: doc.id, ...doc.data() }; });
       readAlgorithms(algorithms);
@@ -43,10 +43,10 @@ const AlgorithmProvider: React.FC = ({children}) => {
     return () => unsubscribeAlgorithms();
   }, [user]);
 
-  const upsert = (name: string, primary: string, type: AlgType) => {
+  const upsert = (name: string, primary: string, type: AlgType, favorite: boolean) => {
     const map = type === 'OLL' ? sOllMap : sPllMap;
     const newAlgorithm: UserAlgorithm = {
-      name, primary, type
+      name, primary, type, favorite
     };
     if (map[name]) {
       newAlgorithm.id = map[name].id;
