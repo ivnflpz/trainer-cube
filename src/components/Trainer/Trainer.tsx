@@ -1,5 +1,5 @@
 import React from 'react';
 
-const Trainer = () => <h1>Trainer</h1>;
+const Trainer: React.FC = () => <h1>Trainer</h1>;
 
 export default Trainer;

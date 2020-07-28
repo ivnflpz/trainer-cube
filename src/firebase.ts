@@ -24,8 +24,9 @@ firebase.initializeApp(firebaseConfig);
 export const firestore = firebase.firestore();
 export const auth = firebase.auth();
 export const provider = new firebase.auth.GoogleAuthProvider();
-export const signInWithGoogle = () => auth.signInWithRedirect(provider);
-export const signOut = () => auth.signOut();
+export const signInWithGoogle = (): Promise<void> =>
+  auth.signInWithRedirect(provider);
+export const signOut = (): Promise<void> => auth.signOut();
 
 export const getUserDoc = async (uid: string): Promise<any> => {
   if (!uid) return null;

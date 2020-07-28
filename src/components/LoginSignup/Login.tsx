@@ -22,13 +22,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Login: React.FC = () => {
   const [sEmail, setEmail] = React.useState('');
   const [sPassword, setPassword] = React.useState('');
   const [sError, setError] = React.useState(false);
   const history = useHistory();
 
-  const onSignIn = () => {
+  const onSignIn = (): void => {
     auth
       .signInWithEmailAndPassword(sEmail, sPassword)
       .then(() => {
@@ -41,7 +41,7 @@ const Login = () => {
       });
   };
 
-  const onSignInWithGoogle = () => {
+  const onSignInWithGoogle = (): void => {
     signInWithGoogle().then(() => {
       history.replace('/');
     });

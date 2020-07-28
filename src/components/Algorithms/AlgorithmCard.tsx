@@ -71,10 +71,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface IAlgorithmCardProps {
+interface AlgorithmCardProps {
   algorithm: AlgorithmData;
 }
-const AlgorithmCard: React.FC<IAlgorithmCardProps> = ({ algorithm }) => {
+const AlgorithmCard: React.FC<AlgorithmCardProps> = ({ algorithm }) => {
   const {
     algorithms,
     primary,

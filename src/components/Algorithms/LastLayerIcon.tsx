@@ -3,7 +3,7 @@ import React from 'react';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { useColorsContext } from '../../providers/ColorProvider';
 
-interface ITopLayerIcon {
+interface TopLayerIcon {
   className?: string;
   faces?: string;
   edges: string;
@@ -11,7 +11,7 @@ interface ITopLayerIcon {
   arrows?: string;
 }
 
-const LastLayerIcon: React.FC<ITopLayerIcon> = ({
+const LastLayerIcon: React.FC<TopLayerIcon> = ({
   arrows,
   edges,
   faces,

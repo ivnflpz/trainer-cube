@@ -1,7 +1,7 @@
 import React from 'react';
 import ColorSchemeSettings from './ColorSchemeSettings';
 
-const Settings = () => (
+const Settings: React.FC = () => (
   <>
     <ColorSchemeSettings />
   </>

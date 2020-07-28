@@ -1,12 +1,12 @@
 import React from 'react';
 import { auth, createUserProfileDoc } from '../firebase';
 
-interface IUserContext {
+interface UserContext {
   authenticated: boolean;
   user: any;
 }
 
-const UserContext = React.createContext<IUserContext>({
+const UserContext = React.createContext<UserContext>({
   authenticated: false,
   user: null,
 });
