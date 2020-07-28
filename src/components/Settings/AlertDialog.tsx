@@ -5,14 +5,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-interface IAlertDialogProps {
+interface AlertDialogProps {
   children: React.ReactElement;
   open: boolean;
   onClose: () => void;
   onAccept: () => void;
   title: string;
 }
-const AlertDialog: React.FC<IAlertDialogProps> = ({
+const AlertDialog: React.FC<AlertDialogProps> = ({
   children,
   open,
   onAccept,

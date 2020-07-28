@@ -3,11 +3,11 @@ import AlgorithmCard from './AlgorithmCard';
 import ollList from '../../data/oll';
 import pllList from '../../data/pll';
 
-interface IAlgorithmsProps {
+interface AlgorithmsProps {
   type: AlgType;
 }
 
-const Algorithms: React.FC<IAlgorithmsProps> = ({ type }) => {
+const Algorithms: React.FC<AlgorithmsProps> = ({ type }) => {
   const list = type === 'OLL' ? ollList : pllList;
   return (
     <>

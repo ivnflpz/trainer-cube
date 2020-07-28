@@ -23,11 +23,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface IAppBarProps {
+interface AppBarProps {
   onMenuToggle: (open: boolean) => void;
 }
 
-const AppBar: React.FC<IAppBarProps> = ({ onMenuToggle }) => {
+const AppBar: React.FC<AppBarProps> = ({ onMenuToggle }) => {
   const classes = useStyles();
 
   return (

@@ -25,13 +25,13 @@ const iconMap: { [key: string]: any } = {
   settings: SettingsIcon,
 };
 
-interface ISideNavLink {
+interface SideNavLink {
   url: string;
   text: string;
   icon: string;
 }
 
-const SideNavLink: React.FC<ISideNavLink> = ({ url, text, icon }) => {
+const SideNavLink: React.FC<SideNavLink> = ({ url, text, icon }) => {
   const classes = useStyles();
   const Icon = iconMap[icon];
   return (

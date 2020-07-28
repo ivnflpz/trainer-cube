@@ -3,7 +3,7 @@ import { firestore } from '../firebase';
 import { useUserContext } from './UserProvider';
 import { upsertAlgorithm } from '../repositories/FirebaseClient';
 
-interface IAlgorithmContext {
+interface AlgorithmContext {
   ollAlgorithms: UserAlgorithmMap;
   pllAlgorithms: UserAlgorithmMap;
   upsert: (
@@ -14,7 +14,7 @@ interface IAlgorithmContext {
   ) => void;
 }
 
-const AlgorithmContext = React.createContext<IAlgorithmContext>({
+const AlgorithmContext = React.createContext<AlgorithmContext>({
   ollAlgorithms: {},
   pllAlgorithms: {},
   upsert: () => null,

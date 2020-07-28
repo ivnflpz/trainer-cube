@@ -27,15 +27,15 @@ const UserActions: React.FC = () => {
   const [sAnchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(sAnchorEl);
 
-  const onMenuClick = (event: any) => {
+  const onMenuClick = (event: any): void => {
     setAnchorEl(event.currentTarget);
   };
 
-  const onMenuClose = () => {
+  const onMenuClose = (): void => {
     setAnchorEl(null);
   };
 
-  const renderUserActions = () => {
+  const renderUserActions = (): React.ReactElement => {
     const { displayName, photoURL } = user;
     const userIcon =
       photoURL !== null ? (

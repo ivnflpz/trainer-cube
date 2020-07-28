@@ -10,7 +10,8 @@ module.exports = {
         'plugin:import/typescript',
         'eslint:recommended',
         'plugin:react/recommended',
-        'plugin:@typescript-eslint/recommended'
+        'plugin:@typescript-eslint/recommended',
+        "prettier/@typescript-eslint"
     ],
     'parser': '@typescript-eslint/parser',
     'parserOptions': {
@@ -46,7 +47,7 @@ module.exports = {
         ],
         'react/prop-types': 0,
         '@typescript-eslint/explicit-module-boundary-types': 0,
-        '@typescript-eslint/no-explicit-any': 0,
+        '@typescript-eslint/no-explicit-any': 0
     },
     'settings': {
         "react": {
