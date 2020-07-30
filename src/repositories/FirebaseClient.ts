@@ -1,6 +1,6 @@
 import { firestore } from '../firebase';
 
-export const upsertAlgorithm = (algorithm: UserAlgorithm) => {
+export const upsertAlgorithm = (algorithm: UserAlgorithm): void => {
   if (algorithm.id) {
     firestore
       .collection('algorithms')

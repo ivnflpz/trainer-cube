@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   },
 });
 
-interface ISidenavProps {
+interface SidenavProps {
   open: boolean;
   onOpenToggle: (open: boolean) => void;
 }
@@ -61,7 +61,7 @@ const routes = [
   ],
 ];
 
-const SideNav: React.FC<ISidenavProps> = ({ open, onOpenToggle }) => {
+const SideNav: React.FC<SidenavProps> = ({ open, onOpenToggle }) => {
   const classes = useStyles();
 
   const list = () => (

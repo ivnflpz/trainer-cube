@@ -1,12 +1,12 @@
 import React from 'react';
 
-interface IColorContext {
+interface ColorContext {
   colors: any;
   updateColors: (face: string, value: string) => void;
   resetToDefault: () => void;
 }
 
-const ColorContext = React.createContext<IColorContext>({
+const ColorContext = React.createContext<ColorContext>({
   colors: null,
   updateColors: () => null,
   resetToDefault: () => null,

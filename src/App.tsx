@@ -1,4 +1,5 @@
 import React from 'react';
+import { hot } from 'react-hot-loader/root';
 import Layout from './components/Layout';
 import { UserProvider } from './providers/UserProvider';
 import { ColorProvider } from './providers/ColorProvider';
@@ -17,4 +18,4 @@ const App = () => (
   </ColorProvider>
 );
 
-export default App;
+export default hot(App);

@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = () => {
+const SignUp: React.FC = () => {
   const [sEmail, setEmail] = React.useState('');
   const [sPassword, setPassword] = React.useState('');
   const [sConfirmPassword, setConfirmPassword] = React.useState('');
@@ -32,12 +32,12 @@ const SignUp = () => {
   });
   const history = useHistory();
 
-  const onEmailChange = (email: string) => {
+  const onEmailChange = (email: string): void => {
     setEmail(email);
     setErrors((errors) => ({ ...errors, email: !email.includes('@') }));
   };
 
-  const onPasswordChange = (password: string) => {
+  const onPasswordChange = (password: string): void => {
     setPassword(password);
     setErrors((errors) => ({
       ...errors,
@@ -46,7 +46,7 @@ const SignUp = () => {
     }));
   };
 
-  const onConfirmPasswordChange = (confirmPassword: string) => {
+  const onConfirmPasswordChange = (confirmPassword: string): void => {
     setConfirmPassword(confirmPassword);
     setErrors((errors) => ({
       ...errors,
@@ -54,7 +54,7 @@ const SignUp = () => {
     }));
   };
 
-  const onSignUp = () => {
+  const onSignUp = (): void => {
     auth
       .createUserWithEmailAndPassword(sEmail, sPassword)
       .then(() => {

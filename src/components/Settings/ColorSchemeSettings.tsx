@@ -40,13 +40,16 @@ const ColorSchemeSettings = () => {
   const { colors, updateColors, resetToDefault } = useColorsContext();
   const classes = useStyles();
 
-  const onAccept = () => {
+  const onAccept = (): void => {
     resetToDefault();
     setOpen(false);
   };
 
   // TODO: replace full color picker with new component without text fields
-  const renderColorPicker = (label: string, face: string) => (
+  const renderColorPicker = (
+    label: string,
+    face: string
+  ): React.ReactElement => (
     <div>
       <Typography variant="subtitle2" align="left">
         {label}
@@ -60,7 +63,7 @@ const ColorSchemeSettings = () => {
     </div>
   );
 
-  const renderCubeScheme = () => (
+  const renderCubeScheme = (): React.ReactElement => (
     <section className={classes.cubeContainer}>
       <Typography className={classes.title} variant="subtitle2">
         Color scheme
