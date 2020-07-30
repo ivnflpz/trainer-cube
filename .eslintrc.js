@@ -32,10 +32,7 @@ module.exports = {
             'error',
             2
         ],
-        'linebreak-style': [
-            'error',
-            'unix'
-        ],
+        'linebreak-style': 0,
         'quotes': [
             'error',
             'single',
@@ -48,6 +45,7 @@ module.exports = {
         "prettier/prettier": ["error", {
            "endOfLine":"auto"
          }],
+         'no-console': 'off',
         'react/prop-types': 0,
         '@typescript-eslint/explicit-module-boundary-types': 0,
         '@typescript-eslint/no-explicit-any': 0
