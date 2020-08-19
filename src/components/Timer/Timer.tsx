@@ -17,8 +17,8 @@ const useStyles = makeStyles(() => ({
 
 const Timer = () => {
   const classes = useStyles();
-  const [minutes, setMintues] = React.useState(0);
-  const [seconds, setSeconds] = React.useState(-5);
+  const [sMinutes, setMintues] = React.useState(0);
+  const [sSeconds, setSeconds] = React.useState(-5);
   const ref = React.useRef<any>();
 
   const stopTimer = () => {
@@ -55,9 +55,9 @@ const Timer = () => {
       onKeyDown={toggleTimer}
     >
       <h1>
-        {minutes < 10 ? 0 : ''}
-        {minutes}:{seconds < 10 ? 0 : ''}
-        {seconds < 0 ? Math.abs(seconds) : seconds}
+        {sMinutes < 10 ? 0 : ''}
+        {sMinutes}:{sSeconds < 10 ? 0 : ''}
+        {sSeconds < 0 ? Math.abs(sSeconds) : sSeconds}
       </h1>
     </div>
   );
