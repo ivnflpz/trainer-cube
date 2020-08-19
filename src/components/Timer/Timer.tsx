@@ -47,6 +47,12 @@ const Timer = () => {
     }
   };
 
+  const time = `${padStart(sMinutes.toString(), 2, '0')}:${padStart(
+    Math.abs(sSeconds).toString(),
+    2,
+    '0'
+  )}`;
+
   return (
     <div
       className={classes.timer}
@@ -55,10 +61,7 @@ const Timer = () => {
       onClick={toggleTimer}
       onKeyDown={toggleTimer}
     >
-      <h1>
-        {padStart(sMinutes.toString(), 2, '0')}:
-        {padStart(Math.abs(sSeconds).toString(), 2, '0')}
-      </h1>
+      <h1>{sSeconds < 0 ? Math.abs(sSeconds) : time}</h1>
     </div>
   );
 };
