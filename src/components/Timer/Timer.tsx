@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
+import { padStart } from 'lodash';
 
 const useStyles = makeStyles(() => ({
   timer: {
@@ -55,9 +56,8 @@ const Timer = () => {
       onKeyDown={toggleTimer}
     >
       <h1>
-        {sMinutes < 10 ? 0 : ''}
-        {sMinutes}:{sSeconds < 10 ? 0 : ''}
-        {sSeconds < 0 ? Math.abs(sSeconds) : sSeconds}
+        {padStart(sMinutes.toString(), 2, '0')}:
+        {padStart(Math.abs(sSeconds).toString(), 2, '0')}
       </h1>
     </div>
   );
